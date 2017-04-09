@@ -36,7 +36,7 @@
 			<key>config</key>
 			<dict>
 				<key>alfredfiltersresults</key>
-				<true/>
+				<false/>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
@@ -72,15 +72,15 @@ def main(wf):
 
 	for child in soup.find_all("item"):
 		if (not child.title.string is None) and (not child.description.string is None):
-			wf.add_item(child.title.string, child.description.string)
-
+			wf.add_item(child.title.string, child.description.string, arg=child.link.string, valid=True)
+	
 	wf.send_feedback()
 	
 if __name__ == "__main__":
 	wf = Workflow()
 	sys.exit(wf.run(main))</string>
 				<key>scriptargtype</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>scriptfile</key>
 				<string>smzdm.py</string>
 				<key>subtext</key>
