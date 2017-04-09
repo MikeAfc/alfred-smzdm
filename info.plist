@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.cokerk</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>25E4795E-43A5-4AF0-A1F9-34876DFA5C8D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EFFB5914-D099-41F4-964C-8365ED396F2F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>MikeAfc</string>
+	<key>description</key>
+	<string>获取什么值得买最新信息</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>SMZDM-Alfred</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>sdm</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>wait</string>
+				<key>script</key>
+				<string>#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import sys
+from workflow import Workflow
+
+def main(wf):
+	
+	import urllib2
+	from bs4 import BeautifulSoup
+	from xml.dom.minidom import Document
+
+	request = urllib2.Request("http://feed.smzdm.com/")
+	request.add_header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36")
+
+	soup = BeautifulSoup(urllib2.urlopen(request).read())
+
+	for child in soup.find_all("item"):
+		if (not child.title.string is None) and (not child.description.string is None):
+			wf.add_item(child.title.string, child.description.string)
+
+	wf.send_feedback()
+	
+if __name__ == "__main__":
+	wf = Workflow()
+	sys.exit(wf.run(main))</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>smzdm.py</string>
+				<key>subtext</key>
+				<string>placeholder</string>
+				<key>title</key>
+				<string>Fetching...</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>25E4795E-43A5-4AF0-A1F9-34876DFA5C8D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>EFFB5914-D099-41F4-964C-8365ED396F2F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>25E4795E-43A5-4AF0-A1F9-34876DFA5C8D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>210</integer>
+			<key>ypos</key>
+			<integer>180</integer>
+		</dict>
+		<key>EFFB5914-D099-41F4-964C-8365ED396F2F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>470</integer>
+			<key>ypos</key>
+			<integer>180</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>coderk.com</string>
+</dict>
+</plist>
